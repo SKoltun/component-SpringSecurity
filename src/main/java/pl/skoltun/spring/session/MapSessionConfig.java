@@ -5,10 +5,9 @@ import org.springframework.session.MapSessionRepository;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class MapSessionConfig {
+public interface MapSessionConfig {
     @Bean
-    public MapSessionRepository sessionRepository() {
+    default MapSessionRepository sessionRepository() {
         return new MapSessionRepository(new ConcurrentHashMap<>());
     }
-
 }
