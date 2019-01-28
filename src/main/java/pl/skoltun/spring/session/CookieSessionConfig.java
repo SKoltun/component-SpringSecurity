@@ -5,12 +5,12 @@ import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
 public interface CookieSessionConfig {
-    static final String DEFAULT_COOKIE_NAME = "Authentication";
-    static final String DEFAULT_COOKIE_PATH = "/";
-    static final Boolean DEFAULT_HTTP_ONLY = true;
+    String DEFAULT_COOKIE_NAME = "Authentication";
+    String DEFAULT_COOKIE_PATH = "/";
+    Boolean DEFAULT_HTTP_ONLY = true;
 
     @Bean
-    public default CookieSerializer cookieSerializer() {
+    default CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
         serializer.setCookieName(getCookieName());
         serializer.setCookiePath(getCookiePath());

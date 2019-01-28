@@ -1,21 +1,21 @@
 package pl.skoltun.spring.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 public abstract class RestSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
     @Autowired
-    private AuthenticationManagerBuilder auth;
+    private UserDetailsService userDetailsService;
 
-    protected <T> HttpSecurity configureSecurity(UserDetailsService detailsService, String... permitAllMatchers) throws Exception {
-        configureDetailsService(detailsService);
+    public HttpSecurity configureSecurity(String... permitAllMatchers) throws Exception {
         HttpSecurity http = getHttp();
         http
                 .csrf()
@@ -37,21 +37,16 @@ public abstract class RestSecurityConfigurerAdapter extends WebSecurityConfigure
         return http;
     }
 
-
     @Autowired
-    protected AuthenticationManagerBuilder authenticationManagerBuilder() {
-        return auth;
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
-    protected <T> void configureDetailsService(UserDetailsService detailsService) throws Exception {
-        AuthenticationManagerBuilder managerBuilder = authenticationManagerBuilder();
-        managerBuilder.userDetailsService(detailsService)
-                .passwordEncoder(bCryptPasswordEncoder());
-    }
+    @Bean
+    protected abstract <T extends PasswordEncoder> T passwordEncoder();
 
-    protected BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
+    @Bean
+    protected abstract UserDetailsService detailsService();
 
 }
