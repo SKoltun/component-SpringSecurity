@@ -1,4 +1,4 @@
-package pl.skoltun.spring.security;
+package pl.skoltun.spring.security.rest.adapter;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

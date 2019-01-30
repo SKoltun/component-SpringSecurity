@@ -1,4 +1,4 @@
-package pl.skoltun.spring.security;
+package pl.skoltun.spring.security.rest.adapter;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

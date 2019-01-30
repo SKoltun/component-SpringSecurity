@@ -1,10 +1,10 @@
-package pl.skoltun.spring.session;
+package pl.skoltun.spring.session.cookie;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
-public interface CookieSessionConfig {
+public interface CookieSerializerConfig {
     String DEFAULT_COOKIE_NAME = "Authentication";
     String DEFAULT_COOKIE_PATH = "/";
     Boolean DEFAULT_HTTP_ONLY = true;
